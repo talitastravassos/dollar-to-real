@@ -4,6 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import CurrencyProvider from './context/CurrencyContext';
+
+ReactDOM.render(
+    <CurrencyProvider>
+        <App />
+    </CurrencyProvider>, document.getElementById('root'));
 
 serviceWorker.register();
