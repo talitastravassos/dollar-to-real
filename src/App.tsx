@@ -1,6 +1,6 @@
 import React from "react";
 import { CurrencyContext } from "./context/CurrencyContext";
-import "./App.css";
+import "./App.scss";
 import Painel from "./components/Painel";
 
 const App: React.FC = () => {

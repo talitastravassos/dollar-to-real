@@ -1,27 +1,9 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            display: 'flex',
-            flexWrap: 'wrap',
-        },
-        margin: {
-            margin: theme.spacing(1),
-        },
-        withoutLabel: {
-            marginTop: theme.spacing(3),
-        },
-        textField: {
-            width: 200,
-        },
-    }),
-);
+import styles from './styles.module.scss'
 
 interface State {
     value: any;
@@ -37,7 +19,7 @@ interface Props {
 }
 
 export default function InputValue({ label, withPrefix, prefix, onChange, mask, name }: Props) {
-    const classes = useStyles();
+    // const classes = useStyles();
     const [state, setState] = React.useState<State>({
         value: ''
     });
@@ -49,9 +31,9 @@ export default function InputValue({ label, withPrefix, prefix, onChange, mask, 
     };
 
     return (
-        <div className={classes.root}>
+        <div className={styles.container}>
             <div>
-                <FormControl className={classes.margin}>
+                <FormControl>
                     <InputLabel htmlFor="input-value">{label}</InputLabel>
                     <Input
                         id="input-value"
