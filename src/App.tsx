@@ -4,17 +4,18 @@ import "./App.scss";
 import Painel from "./components/Painel";
 
 const App: React.FC = () => {
-  const { action: { test } } = React.useContext(CurrencyContext)
+  const {
+    state: { currencyRate }
+  } = React.useContext(CurrencyContext);
 
   React.useEffect(() => {
-    test();
-  }, [])
+    console.log(currencyRate);
+  }, [currencyRate]);
 
   return (
     <>
       <Painel />
     </>
-
   );
 };
 

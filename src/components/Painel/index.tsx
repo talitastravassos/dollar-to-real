@@ -3,8 +3,13 @@ import InputValue from "../InputValue";
 import { formatPrice, numberMask } from "../../utils/masks";
 import styles from "./styles.module.scss";
 import RadioButtons from "../RadioButtons";
+import { CurrencyContext } from "../../context/CurrencyContext";
 
 export default function Painel() {
+  const {
+    state: { currencyRate }
+  } = React.useContext(CurrencyContext);
+
   const onChange = (name: string, value: string) => {
     console.log(name, value);
     //toNumber(value) * 100
@@ -38,9 +43,15 @@ export default function Painel() {
           ]}
         />
       </div>
-      <div className={styles.info_container}>
-        <p>Cotação do dia: R$ 4,00</p>
-      </div>
+      {currencyRate.bid ? (
+        <div className={styles.info_container}>
+          <p>
+            Cotação do dia: R$ {currencyRate.bid.toString().replace(".", ",")}
+          </p>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

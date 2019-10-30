@@ -3,14 +3,17 @@ import axios from "axios";
 
 interface State {
     exchangeRate: number;
+    currencyRate: any;
 }
 
 interface IContext {
     state: State;
     action: {
-        test(): void;
+        getCurrencyRate(): void;
     };
 }
+
+const base_url = "https://economia.awesomeapi.com.br/USD-BRL/"
 
 export const CurrencyContext = React.createContext({} as IContext);
 
@@ -20,23 +23,32 @@ export default class CurrencyProvider extends React.Component<{}, State> {
         super(props);
 
         this.state = {
-            exchangeRate: 0
+            exchangeRate: 0,
+            currencyRate: {}
         }
     }
 
-    test = () => {
-        console.log("currency context ok")
+    getCurrencyRate = () => {
+        axios.get(base_url)
+        .then(res => {
+            // console.log(res.data[0])
+            this.setState({
+                currencyRate: res.data[0]
+            })
+        })
+
     }
 
-    componentDidMount() {
 
+    componentDidMount() {
+        this.getCurrencyRate()
     }
 
     render() {
         const value = {
             state: { ...this.state },
             action: {
-                test: this.test
+                getCurrencyRate: this.getCurrencyRate
             }
         }
 
