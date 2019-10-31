@@ -1,15 +1,20 @@
 import React from "react";
 import axios from "axios";
-import { CurrencyRate, initialCurrency } from "./currency.types";
+import {
+  CurrencyRate,
+  initialCurrency,
+  ProcessedData,
+  initialProcessedData
+} from "./currency.types";
 import { numberMask } from "../utils/masks";
 
 interface State {
-  exchangeRate: number;
   currencyRate: CurrencyRate; // cotação atual
-  value: number; // valor que sera convertido para reais
-  tax: number;
-  IOF: number;
+  valueUSD: number; // valor que sera convertido para reais
+  taxUSD: number;
+  IOFBRL: number;
   paymentMode: string;
+  processedData: ProcessedData;
 }
 
 interface IContext {
@@ -31,11 +36,11 @@ export default class CurrencyProvider extends React.Component<{}, State> {
     super(props);
 
     this.state = {
-      exchangeRate: 0,
       currencyRate: initialCurrency,
-      value: 0,
-      tax: 0,
-      IOF: 0,
+      processedData: initialProcessedData,
+      valueUSD: 0,
+      taxUSD: 0,
+      IOFBRL: 0,
       paymentMode: ""
     };
   }
@@ -43,10 +48,10 @@ export default class CurrencyProvider extends React.Component<{}, State> {
   setDataToConvert = (name: string, value: number) => {
     if (name === "tax") {
       this.setState({
-        tax: value
+        taxUSD: value
       });
     } else if (name === "value") {
-      this.setState({ value });
+      this.setState({ valueUSD: value });
     }
   };
 
@@ -61,16 +66,16 @@ export default class CurrencyProvider extends React.Component<{}, State> {
 
   paymentInCash = () => {
     this.setState({
-      IOF: 1.1,
+      IOFBRL: 1.1,
       paymentMode: "cash"
     });
 
-    console.log("cash selected");
+    // console.log("cash selected");
   };
 
   paymentInCredit = () => {
     this.setState({
-      IOF: 6.4,
+      IOFBRL: 6.4,
       paymentMode: "credit"
     });
     // console.log("credit selected");
@@ -81,15 +86,34 @@ export default class CurrencyProvider extends React.Component<{}, State> {
     return Number(calc.toFixed(2));
   };
 
+  paymentProcessing = () => {
+    const { IOFBRL, currencyRate, paymentMode, valueUSD, taxUSD } = this.state;
+
+    let payment: ProcessedData = initialProcessedData;
+
+    payment.totalUSDWithoutTax = valueUSD;
+    payment.totalUSDWithTax = valueUSD + this.calcPercentage(taxUSD, valueUSD);
+    payment.totalStateTax = this.calcPercentage(taxUSD, valueUSD);
+    payment.totalBRLWithoutTax = (valueUSD + this.calcPercentage(taxUSD, valueUSD)) * Number(numberMask(currencyRate.bid));
+    payment.totalIOF = this.calcPercentage(IOFBRL, (valueUSD + this.calcPercentage(taxUSD, valueUSD)) * Number(numberMask(currencyRate.bid)) );
+
+    if (paymentMode === "cash") {
+      payment.totalBRLWithTax = (valueUSD + this.calcPercentage(taxUSD, valueUSD)) * (Number(numberMask(currencyRate.bid)) + payment.totalIOF);
+    } else if (paymentMode === "credit") {
+      payment.totalBRLWithTax = (valueUSD + this.calcPercentage(taxUSD, valueUSD)) * Number(numberMask(currencyRate.bid)) + payment.totalIOF;
+    }
+    console.log(payment);
+  };
+
   componentDidMount() {
     this.getCurrencyRate();
   }
 
   componentDidUpdate() {
-    const { IOF, currencyRate } = this.state;
+    const { IOFBRL, currencyRate } = this.state;
+    this.paymentProcessing();
 
-    console.log(this.calcPercentage(IOF, Number(numberMask(currencyRate.bid))));
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   render() {
