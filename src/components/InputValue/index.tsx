@@ -19,15 +19,16 @@ interface Props {
 }
 
 export default function InputValue({ label, withPrefix, prefix, onChange, mask, name }: Props) {
-    // const classes = useStyles();
     const [state, setState] = React.useState<State>({
         value: ''
     });
 
+    React.useEffect(() => {
+        onChange(name, state.value)
+    }, [state])
+
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setState({ ...state, [prop]: event.target.value });
-        onChange(name, state.value)
-        // console.log(Number(state.value / 100))
     };
 
     return (
