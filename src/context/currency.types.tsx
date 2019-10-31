@@ -26,16 +26,14 @@ export const initialCurrency = {
   create_date: ""
 };
 
-export interface ValuesToProcess {
+export interface DataToProcess {
   valueToConvert: number;
   stateTax: number;
-  IOF: number;
 }
 
 export const initialValues = {
   valueToConvert: 0,
-  stateTax: 0,
-  IOF: 0
+  stateTax: 0
 };
 
 export interface ProcessedData {

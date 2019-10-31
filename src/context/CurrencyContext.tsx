@@ -87,21 +87,24 @@ export default class CurrencyProvider extends React.Component<{}, State> {
   };
 
   paymentProcessing = () => {
-    const { IOFBRL, currencyRate, paymentMode, valueUSD, taxUSD } = this.state;
+    const { IOFBRL, currencyRate, valueUSD, taxUSD } = this.state;
 
     let payment: ProcessedData = initialProcessedData;
 
     payment.totalUSDWithoutTax = valueUSD;
     payment.totalUSDWithTax = valueUSD + this.calcPercentage(taxUSD, valueUSD);
     payment.totalStateTax = this.calcPercentage(taxUSD, valueUSD);
-    payment.totalBRLWithoutTax = (valueUSD + this.calcPercentage(taxUSD, valueUSD)) * Number(numberMask(currencyRate.bid));
-    payment.totalIOF = this.calcPercentage(IOFBRL, (valueUSD + this.calcPercentage(taxUSD, valueUSD)) * Number(numberMask(currencyRate.bid)) );
+    payment.totalBRLWithoutTax =
+      payment.totalUSDWithTax * Number(numberMask(currencyRate.bid));
+    payment.totalIOF = this.calcPercentage(
+      IOFBRL,
+      payment.totalUSDWithTax * Number(numberMask(currencyRate.bid))
+    );
 
-    if (paymentMode === "cash") {
-      payment.totalBRLWithTax = (valueUSD + this.calcPercentage(taxUSD, valueUSD)) * (Number(numberMask(currencyRate.bid)) + payment.totalIOF);
-    } else if (paymentMode === "credit") {
-      payment.totalBRLWithTax = (valueUSD + this.calcPercentage(taxUSD, valueUSD)) * Number(numberMask(currencyRate.bid)) + payment.totalIOF;
-    }
+    payment.totalBRLWithTax =
+      payment.totalUSDWithTax * Number(numberMask(currencyRate.bid)) +
+      payment.totalIOF;
+
     console.log(payment);
   };
 
