@@ -41,6 +41,7 @@ export default function Painel() {
     if(data.stateTax !== 0 && data.valueToConvert){
       setDataToConvert(data)
     }
+    // eslint-disable-next-line
   }, [data])
 
   return (

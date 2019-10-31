@@ -109,7 +109,6 @@ export default class CurrencyProvider extends React.Component<{}, State> {
   }
 
   componentDidUpdate() {
-    const { IOFBRL, currencyRate } = this.state;
     this.paymentProcessing();
 
     // console.log(this.state);

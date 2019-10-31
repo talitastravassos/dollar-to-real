@@ -5,7 +5,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import styles from "./styles.module.scss";
+// import styles from "./styles.module.scss";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,6 +32,7 @@ export default function RadioButtons({ fields, legend, selectedOption }: Props) 
   React.useEffect(() => {
     // console.log(value);
     selectedOption(value)
+    // eslint-disable-next-line
   }, [value]);
 
   return (

@@ -25,6 +25,7 @@ export default function InputValue({ label, withPrefix, prefix, onChange, mask, 
 
     React.useEffect(() => {
         onChange(name, state.value)
+        // eslint-disable-next-line
     }, [state])
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
