@@ -18,9 +18,10 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   fields: any[];
   legend: string;
+  selectedOption(option: string): void;
 }
 
-export default function RadioButtons({ fields, legend }: Props) {
+export default function RadioButtons({ fields, legend, selectedOption }: Props) {
   const classes = useStyles();
   const [value, setValue] = React.useState("");
 
@@ -29,7 +30,8 @@ export default function RadioButtons({ fields, legend }: Props) {
   };
 
   React.useEffect(() => {
-    console.log(value);
+    // console.log(value);
+    selectedOption(value)
   }, [value]);
 
   return (

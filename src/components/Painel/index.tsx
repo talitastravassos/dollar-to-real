@@ -7,6 +7,7 @@ import { CurrencyContext } from "../../context/CurrencyContext";
 
 export default function Painel() {
   const {
+    action: { paymentInCash, paymentInCredit },
     state: { currencyRate }
   } = React.useContext(CurrencyContext);
 
@@ -14,6 +15,15 @@ export default function Painel() {
     console.log(name, value);
     //toNumber(value) * 100
   };
+
+  const paymentSelected = (mode: string) => {
+    if(mode === 'credit'){
+      paymentInCredit()
+    } else if (mode === 'cash'){
+      paymentInCash()
+    }
+    // console.log(mode)
+  }
 
   return (
     <div className={styles.container}>
@@ -41,6 +51,7 @@ export default function Painel() {
             { value: "credit", label: "Cartão de Crédito" },
             { value: "cash", label: "Em Dinheiro" }
           ]}
+          selectedOption={paymentSelected}
         />
       </div>
       {currencyRate.bid ? (
