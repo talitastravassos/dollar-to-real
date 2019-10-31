@@ -4,6 +4,7 @@ import { formatPrice, numberMask, toNumber } from "../../utils/masks";
 import styles from "./styles.module.scss";
 import RadioButtons from "../RadioButtons";
 import { CurrencyContext } from "../../context/CurrencyContext";
+import { initialValues, DataToProcess } from "../../context/currency.types";
 
 export default function Painel() {
   const {
@@ -11,11 +12,20 @@ export default function Painel() {
     state: { currencyRate }
   } = React.useContext(CurrencyContext);
 
+  const [data, setData] = React.useState<DataToProcess>(initialValues)
+
   const onChange = (name: string, value: string) => {
     if (name === "value") {
-      setDataToConvert(name, toNumber(value) * 10);
+      setData((prevState) => ({
+        ...prevState, 
+        valueToConvert: toNumber(value) * 10
+      }))
+
     } else if (name === "tax") {
-      setDataToConvert(name, Number(value));
+      setData((prevState) => ({
+        ...prevState, 
+        stateTax: Number(value)
+      }))
     }
   };
 
@@ -26,6 +36,12 @@ export default function Painel() {
       paymentInCash();
     }
   };
+
+  React.useEffect(() => {
+    if(data.stateTax !== 0 && data.valueToConvert){
+      setDataToConvert(data)
+    }
+  }, [data])
 
   return (
     <div className={styles.container}>

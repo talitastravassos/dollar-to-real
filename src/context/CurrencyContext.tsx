@@ -4,17 +4,18 @@ import {
   CurrencyRate,
   initialCurrency,
   ProcessedData,
-  initialProcessedData
+  initialProcessedData,
+  DataToProcess,
+  initialValues
 } from "./currency.types";
 import { numberMask } from "../utils/masks";
 
 interface State {
   currencyRate: CurrencyRate; // cotação atual
-  valueUSD: number; // valor que sera convertido para reais
-  taxUSD: number;
   IOFBRL: number;
   paymentMode: string;
   processedData: ProcessedData;
+  dataToConvert: DataToProcess; // objeto com os valores para correção
 }
 
 interface IContext {
@@ -23,7 +24,7 @@ interface IContext {
     getCurrencyRate(): void;
     paymentInCash(): void;
     paymentInCredit(): void;
-    setDataToConvert(name: string, value: number): void;
+    setDataToConvert(dataToConvert: DataToProcess): void;
   };
 }
 
@@ -38,21 +39,14 @@ export default class CurrencyProvider extends React.Component<{}, State> {
     this.state = {
       currencyRate: initialCurrency,
       processedData: initialProcessedData,
-      valueUSD: 0,
-      taxUSD: 0,
+      dataToConvert: initialValues,
       IOFBRL: 0,
       paymentMode: ""
     };
   }
 
-  setDataToConvert = (name: string, value: number) => {
-    if (name === "tax") {
-      this.setState({
-        taxUSD: value
-      });
-    } else if (name === "value") {
-      this.setState({ valueUSD: value });
-    }
+  setDataToConvert = (dataToConvert: DataToProcess) => {
+    this.setState({ dataToConvert })
   };
 
   getCurrencyRate = () => {
@@ -87,13 +81,15 @@ export default class CurrencyProvider extends React.Component<{}, State> {
   };
 
   paymentProcessing = () => {
-    const { IOFBRL, currencyRate, valueUSD, taxUSD } = this.state;
+    const { IOFBRL, currencyRate } = this.state;
+    const { stateTax, valueToConvert } = this.state.dataToConvert;
+
 
     let payment: ProcessedData = initialProcessedData;
 
-    payment.totalUSDWithoutTax = valueUSD;
-    payment.totalUSDWithTax = valueUSD + this.calcPercentage(taxUSD, valueUSD);
-    payment.totalStateTax = this.calcPercentage(taxUSD, valueUSD);
+    payment.totalUSDWithoutTax = valueToConvert;
+    payment.totalUSDWithTax = valueToConvert + this.calcPercentage(stateTax, valueToConvert);
+    payment.totalStateTax = this.calcPercentage(stateTax, valueToConvert);
     payment.totalBRLWithoutTax =
       payment.totalUSDWithTax * Number(numberMask(currencyRate.bid));
     payment.totalIOF = this.calcPercentage(
