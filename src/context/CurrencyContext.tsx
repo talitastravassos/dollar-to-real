@@ -1,9 +1,10 @@
 import React from "react";
 import axios from "axios";
+import { CurrencyRate, initialCurrency } from "./currency.types";
 
 interface State {
   exchangeRate: number;
-  currencyRate: any; // cotação atual
+  currencyRate: CurrencyRate; // cotação atual
   value: number; // valor que sera convertido para reais
   tax: number;
   IOF: number;
@@ -29,7 +30,7 @@ export default class CurrencyProvider extends React.Component<{}, State> {
 
     this.state = {
       exchangeRate: 0,
-      currencyRate: {},
+      currencyRate: initialCurrency,
       value: 0,
       tax: 0,
       IOF: 0
@@ -37,15 +38,14 @@ export default class CurrencyProvider extends React.Component<{}, State> {
   }
 
   setDataToConvert = (name: string, value: number) => {
-    if(name === 'tax'){
-        this.setState({
-            tax: value
-        })  
-    } else if (name === 'value'){
-        this.setState({ value })
-    }  
-    
-  }
+    if (name === "tax") {
+      this.setState({
+        tax: value
+      });
+    } else if (name === "value") {
+      this.setState({ value });
+    }
+  };
 
   getCurrencyRate = () => {
     axios.get(base_url).then(res => {
@@ -57,27 +57,25 @@ export default class CurrencyProvider extends React.Component<{}, State> {
   };
 
   paymentInCash = () => {
-      this.setState({
-          IOF: 1.1
-      })
-      console.log("cash selected")
+    this.setState({
+      IOF: 1.1
+    });
+    console.log("cash selected");
   };
 
   paymentInCredit = () => {
     this.setState({
-        IOF: 6.4
-    })
-    console.log("credit selected")
-
+      IOF: 6.4
+    });
+    console.log("credit selected");
   };
-
 
   componentDidMount() {
     this.getCurrencyRate();
   }
 
-  componentDidUpdate(){
-    console.log(this.state)
+  componentDidUpdate() {
+    console.log(this.state);
   }
 
   render() {
