@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { CurrencyRate, initialCurrency } from "./currency.types";
+import { numberMask } from "../utils/masks";
 
 interface State {
   exchangeRate: number;
@@ -8,6 +9,7 @@ interface State {
   value: number; // valor que sera convertido para reais
   tax: number;
   IOF: number;
+  paymentMode: string;
 }
 
 interface IContext {
@@ -33,7 +35,8 @@ export default class CurrencyProvider extends React.Component<{}, State> {
       currencyRate: initialCurrency,
       value: 0,
       tax: 0,
-      IOF: 0
+      IOF: 0,
+      paymentMode: ""
     };
   }
 
@@ -58,16 +61,24 @@ export default class CurrencyProvider extends React.Component<{}, State> {
 
   paymentInCash = () => {
     this.setState({
-      IOF: 1.1
+      IOF: 1.1,
+      paymentMode: "cash"
     });
+
     console.log("cash selected");
   };
 
   paymentInCredit = () => {
     this.setState({
-      IOF: 6.4
+      IOF: 6.4,
+      paymentMode: "credit"
     });
-    console.log("credit selected");
+    // console.log("credit selected");
+  };
+
+  calcPercentage = (percentage: number, value: number): number => {
+    let calc = value * (percentage / 100);
+    return Number(calc.toFixed(2));
   };
 
   componentDidMount() {
@@ -75,6 +86,9 @@ export default class CurrencyProvider extends React.Component<{}, State> {
   }
 
   componentDidUpdate() {
+    const { IOF, currencyRate } = this.state;
+
+    console.log(this.calcPercentage(IOF, Number(numberMask(currencyRate.bid))));
     console.log(this.state);
   }
 

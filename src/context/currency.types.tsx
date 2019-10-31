@@ -25,3 +25,16 @@ export const initialCurrency = {
     timestamp: "",
     create_date: ""
 }
+
+export interface ValuesToProcess {
+    valueToConvert: number; 
+    stateTax: number;
+    IOF: number;
+}
+
+export const initialValues = {
+    valueToConvert: 0, 
+    stateTax: 0,
+    IOF: 0
+}
+

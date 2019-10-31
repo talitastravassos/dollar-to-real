@@ -59,7 +59,7 @@ export default function Painel() {
       {currencyRate.bid ? (
         <div className={styles.info_container}>
           <p>
-            Cotação do dia: R$ {currencyRate.bid.toString().replace(".", ",")}
+            Cotação do dia: R$ { Number(currencyRate.bid.replace(",", ".")).toFixed(2) }
           </p>
         </div>
       ) : (
