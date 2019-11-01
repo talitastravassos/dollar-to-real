@@ -29,7 +29,7 @@ export default function InputValue({ label, withPrefix, prefix, onChange, mask, 
     }, [state])
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setState({ ...state, [prop]: event.target.value });
+        setState({ ...state, [prop]: mask(event.target.value) });
     };
 
     return (
@@ -40,7 +40,7 @@ export default function InputValue({ label, withPrefix, prefix, onChange, mask, 
                     <Input
                         id="input-value"
                         name={name}
-                        value={mask(state.value)}
+                        value={state.value}
                         onChange={handleChange('value')}
                         startAdornment={(withPrefix) ? <InputAdornment position="start">{prefix}</InputAdornment> : ""}
                     />

@@ -18,7 +18,7 @@ export default function Painel() {
     if (name === "value") {
       setData((prevState) => ({
         ...prevState, 
-        valueToConvert: toNumber(value) * 10
+        valueToConvert: toNumber(value)
       }))
 
     } else if (name === "tax") {
