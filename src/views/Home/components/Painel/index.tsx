@@ -12,7 +12,7 @@ import {
 export default function Painel() {
   const {
     action: { paymentInCash, paymentInCredit, setDataToConvert },
-    state: { currencyRate }
+    state: { currencyRate, paymentMode }
   } = React.useContext(CurrencyContext);
 
   const [data, setData] = React.useState<DataToProcess>(initialValues);
@@ -75,6 +75,19 @@ export default function Painel() {
           ]}
           selectedOption={paymentSelected}
         />
+        {paymentMode !== "" ? (
+          <article className="message is-info">
+            <div className="message-header">
+              <p>Valor do IOF</p>
+            </div>
+            <div className="message-body">
+              Em transações com dinheiro é 1,1%, e em trasações com cartão de
+              crédito é 6,4%.
+            </div>
+          </article>
+        ) : (
+          ""
+        )}
       </div>
       {currencyRate.bid ? (
         <div className={styles.info_container}>
