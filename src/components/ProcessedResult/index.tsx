@@ -12,6 +12,7 @@ export default function ProcessedResult() {
   React.useEffect(() => {
     paymentProcessing();
     console.log(processedData);
+    // eslint-disable-next-line
   }, [paymentMode]);
 
   return isProcessed && processedData.totalIOF !== 0 ? (

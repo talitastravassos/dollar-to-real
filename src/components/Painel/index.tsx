@@ -1,6 +1,6 @@
 import React from "react";
 import InputValue from "../InputValue";
-import { formatPrice, numberMask, toNumber } from "../../utils/masks";
+import { formatPrice, toNumber, percentageMask } from "../../utils/masks";
 import styles from "./styles.module.scss";
 import RadioButtons from "../RadioButtons";
 import { CurrencyContext } from "../../context/CurrencyContext";
@@ -60,7 +60,7 @@ export default function Painel() {
           prefix={"%"}
           onChange={onChange}
           name={"tax"}
-          mask={numberMask}
+          mask={percentageMask}
         />
       </div>
       <div>

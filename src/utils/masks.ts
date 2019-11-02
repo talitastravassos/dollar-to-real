@@ -28,6 +28,15 @@ export const numberMask = (str: string): string => {
     return format ? format[0] : "";
   };
 
+export const percentageMask = (str: string): string => {
+    const format = str
+      .replace(/[^0-9,.]/g, "")
+      .replace(",", ".")
+      .match(/^\d+\.?\d{0,2}/g);
+      
+    return (format && Number(format[0]) <= 100) ? format[0] : "";
+  };  
+
 export function applyNumberFormat(str: any): string {
 	return numeral(str).format('0.0%');
 }
