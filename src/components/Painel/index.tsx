@@ -55,8 +55,9 @@ export default function Painel() {
           name={"value"}
         />
         <InputValue
-          label={"Taxa do Estado (%)"}
-          withPrefix={false}
+          label={"Taxa do Estado"}
+          withPrefix
+          prefix={"%"}
           onChange={onChange}
           name={"tax"}
           mask={numberMask}
