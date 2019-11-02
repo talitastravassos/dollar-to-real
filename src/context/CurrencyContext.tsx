@@ -16,6 +16,7 @@ interface State {
   paymentMode: string;
   processedData: ProcessedData;
   dataToConvert: DataToProcess; // objeto com os valores para correção
+  isProcessed: boolean;
 }
 
 interface IContext {
@@ -25,6 +26,7 @@ interface IContext {
     paymentInCash(): void;
     paymentInCredit(): void;
     setDataToConvert(dataToConvert: DataToProcess): void;
+    paymentProcessing(): void;
   };
 }
 
@@ -41,12 +43,13 @@ export default class CurrencyProvider extends React.Component<{}, State> {
       processedData: initialProcessedData,
       dataToConvert: initialValues,
       IOFBRL: 0,
-      paymentMode: ""
+      paymentMode: "",
+      isProcessed: false
     };
   }
 
   setDataToConvert = (dataToConvert: DataToProcess) => {
-    this.setState({ dataToConvert })
+    this.setState({ dataToConvert });
   };
 
   getCurrencyRate = () => {
@@ -63,8 +66,6 @@ export default class CurrencyProvider extends React.Component<{}, State> {
       IOFBRL: 1.1,
       paymentMode: "cash"
     });
-
-    // console.log("cash selected");
   };
 
   paymentInCredit = () => {
@@ -72,7 +73,6 @@ export default class CurrencyProvider extends React.Component<{}, State> {
       IOFBRL: 6.4,
       paymentMode: "credit"
     });
-    // console.log("credit selected");
   };
 
   calcPercentage = (percentage: number, value: number): number => {
@@ -84,11 +84,11 @@ export default class CurrencyProvider extends React.Component<{}, State> {
     const { IOFBRL, currencyRate } = this.state;
     const { stateTax, valueToConvert } = this.state.dataToConvert;
 
-
     let payment: ProcessedData = initialProcessedData;
 
     payment.totalUSDWithoutTax = valueToConvert;
-    payment.totalUSDWithTax = valueToConvert + this.calcPercentage(stateTax, valueToConvert);
+    payment.totalUSDWithTax =
+      valueToConvert + this.calcPercentage(stateTax, valueToConvert);
     payment.totalStateTax = this.calcPercentage(stateTax, valueToConvert);
     payment.totalBRLWithoutTax =
       payment.totalUSDWithTax * Number(numberMask(currencyRate.bid));
@@ -101,7 +101,12 @@ export default class CurrencyProvider extends React.Component<{}, State> {
       payment.totalUSDWithTax * Number(numberMask(currencyRate.bid)) +
       payment.totalIOF;
 
-    console.log(payment);
+    // console.log(payment);
+
+    this.setState({
+      processedData: payment,
+      isProcessed: true
+    });
   };
 
   componentDidMount() {
@@ -109,8 +114,7 @@ export default class CurrencyProvider extends React.Component<{}, State> {
   }
 
   componentDidUpdate() {
-    this.paymentProcessing();
-
+    // this.paymentProcessing();
     // console.log(this.state);
   }
 
@@ -121,7 +125,8 @@ export default class CurrencyProvider extends React.Component<{}, State> {
         getCurrencyRate: this.getCurrencyRate,
         paymentInCash: this.paymentInCash,
         paymentInCredit: this.paymentInCredit,
-        setDataToConvert: this.setDataToConvert
+        setDataToConvert: this.setDataToConvert,
+        paymentProcessing: this.paymentProcessing
       }
     };
 

@@ -12,20 +12,19 @@ export default function Painel() {
     state: { currencyRate }
   } = React.useContext(CurrencyContext);
 
-  const [data, setData] = React.useState<DataToProcess>(initialValues)
+  const [data, setData] = React.useState<DataToProcess>(initialValues);
 
   const onChange = (name: string, value: string) => {
     if (name === "value") {
-      setData((prevState) => ({
-        ...prevState, 
+      setData(prevState => ({
+        ...prevState,
         valueToConvert: toNumber(value)
-      }))
-
+      }));
     } else if (name === "tax") {
-      setData((prevState) => ({
-        ...prevState, 
+      setData(prevState => ({
+        ...prevState,
         stateTax: Number(value)
-      }))
+      }));
     }
   };
 
@@ -38,11 +37,11 @@ export default function Painel() {
   };
 
   React.useEffect(() => {
-    if(data.stateTax !== 0 && data.valueToConvert){
-      setDataToConvert(data)
+    if (data.stateTax !== 0 && data.valueToConvert) {
+      setDataToConvert(data);
     }
     // eslint-disable-next-line
-  }, [data])
+  }, [data]);
 
   return (
     <div className={styles.container}>
@@ -75,8 +74,13 @@ export default function Painel() {
       </div>
       {currencyRate.bid ? (
         <div className={styles.info_container}>
-          <p>
-            Cotação do dia: R$ { Number(currencyRate.bid.replace(",", ".")).toFixed(2) }
+          <p className="has-text-weight-bold is-size-6">
+            Cotação atual do dolar comercial: R${" "}
+            {formatPrice(
+              Number(currencyRate.bid.replace(",", "."))
+                .toFixed(2)
+                .toString()
+            )}
           </p>
         </div>
       ) : (
