@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import { CurrencyContext } from "../../context/CurrencyContext";
-import { formatPrice } from "../../utils/masks";
+import { formatPrice } from "../../../../utils/masks";
+import { CurrencyContext } from "../../../../context/CurrencyContext";
 
 export default function ProcessedResult() {
   const {

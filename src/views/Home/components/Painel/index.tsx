@@ -1,10 +1,10 @@
 import React from "react";
-import InputValue from "../InputValue";
-import { formatPrice, toNumber, percentageMask } from "../../utils/masks";
+import InputValue from "../../../../components/InputValue";
+import { formatPrice, toNumber, percentageMask } from "../../../../utils/masks";
 import styles from "./styles.module.scss";
-import RadioButtons from "../RadioButtons";
-import { CurrencyContext } from "../../context/CurrencyContext";
-import { initialValues, DataToProcess } from "../../context/currency.types";
+import RadioButtons from "../../../../components/RadioButtons";
+import { CurrencyContext } from "../../../../context/CurrencyContext";
+import { initialValues, DataToProcess } from "../../../../context/currency.types";
 
 export default function Painel() {
   const {
