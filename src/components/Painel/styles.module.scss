@@ -4,7 +4,7 @@
   border-radius: 5px;
   box-shadow: 0px 1px 4px -1px rgba(42, 42, 42, 0.65);
   margin: 10% 10% 40px 10%;
-  padding: 3% 5% 5% 5%;
+  padding: 3% 5% 3% 5%;
 }
 
 .input_container {
@@ -20,7 +20,7 @@
   border: 1px solid blue;
   box-shadow: 0px 1px 4px -1px rgba(42, 42, 42, 0.65);
   padding: 10px;
-  max-width: 30%;
+  max-width: 60%;
 
   @media only screen and (max-width: 1000px) {
     max-width: 90%;

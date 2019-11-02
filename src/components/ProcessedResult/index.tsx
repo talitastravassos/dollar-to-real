@@ -5,14 +5,8 @@ import { formatPrice } from "../../utils/masks";
 
 export default function ProcessedResult() {
   const {
-    action: {
-      paymentProcessing
-    },
-    state: {
-      processedData,
-      paymentMode,
-      isProcessed
-    }
+    action: { paymentProcessing },
+    state: { processedData, paymentMode, isProcessed }
   } = React.useContext(CurrencyContext);
 
   React.useEffect(() => {
@@ -20,43 +14,47 @@ export default function ProcessedResult() {
     console.log(processedData);
   }, [paymentMode]);
 
-  return (isProcessed && processedData.totalIOF !== 0) ? (
+  return isProcessed && processedData.totalIOF !== 0 ? (
     <div className={styles.container}>
       <h1 className="is-size-2 is-size-3-mobile has-text-weight-bold">
         Resultado
       </h1>
       <div className={styles.info_container}>
         <div className={styles.info_column}>
-          <h3 className="is-size-5 is-size-6-mobile">
-            Valor (com IOF): R${" "}
+          <h3 className="is-size-5">Valor Total (com IOF):</h3>
+          <p className="is-size-4">
+            R${" "}
             {formatPrice(processedData.totalBRLWithTax.toFixed(2).toString())}
-          </h3>
-          <h3 className="is-size-5 is-size-6-mobile">
-            Valor (sem IOF): R${" "}
+          </p>
+          <h3 className="is-size-5">Valor Total (sem IOF):</h3>
+          <p className="is-size-4">
+            R${" "}
             {formatPrice(
               processedData.totalBRLWithoutTax.toFixed(2).toString()
             )}
-          </h3>
-          <h3 className="is-size-5 is-size-6-mobile">
-            Total do IOF: R${" "}
-            {formatPrice(processedData.totalIOF.toFixed(2).toString())}
-          </h3>
+          </p>
+          <h3 className="is-size-5">Total do IOF:</h3>
+          <p className="is-size-4">
+            R$ {formatPrice(processedData.totalIOF.toFixed(2).toString())}
+          </p>
         </div>
         <div>
-          <h3 className="is-size-5 is-size-6-mobile">
-            Valor (com a taxa do estado): USD{" "}
+          <h3 className="is-size-5">Valor (com a taxa do estado):</h3>
+          <p className="is-size-4">
+            USD{" "}
             {formatPrice(processedData.totalUSDWithTax.toFixed(2).toString())}
-          </h3>
-          <h3 className="is-size-5 is-size-6-mobile">
-            Valor (sem a taxa do estado): USD{" "}
+          </p>
+          <h3 className="is-size-5">Valor (sem a taxa do estado):</h3>
+          <p className="is-size-4">
+            USD{" "}
             {formatPrice(
               processedData.totalUSDWithoutTax.toFixed(2).toString()
             )}
-          </h3>
-          <h3 className="is-size-5 is-size-6-mobile">
-            Total da taxa de estado: USD{" "}
-            {formatPrice(processedData.totalStateTax.toFixed(2).toString())}
-          </h3>
+          </p>
+          <h3 className="is-size-5">Total da taxa de estado:</h3>
+          <p className="is-size-4">
+            USD {formatPrice(processedData.totalStateTax.toFixed(2).toString())}
+          </p>
         </div>
       </div>
     </div>

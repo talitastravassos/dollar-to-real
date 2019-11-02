@@ -75,7 +75,10 @@ export default function Painel() {
       {currencyRate.bid ? (
         <div className={styles.info_container}>
           <p className="has-text-weight-bold is-size-6">
-            Cotação atual do dolar comercial: R${" "}
+            Cotação atual do dolar comercial:
+          </p>
+          <p className="has-text-weight-bold is-size-5">
+            R${" "}
             {formatPrice(
               Number(currencyRate.bid.replace(",", "."))
                 .toFixed(2)
