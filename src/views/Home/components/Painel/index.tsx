@@ -4,7 +4,10 @@ import { formatPrice, toNumber, percentageMask } from "../../../../utils/masks";
 import styles from "./styles.module.scss";
 import RadioButtons from "../../../../components/RadioButtons";
 import { CurrencyContext } from "../../../../context/CurrencyContext";
-import { initialValues, DataToProcess } from "../../../../context/currency.types";
+import {
+  initialValues,
+  DataToProcess
+} from "../../../../context/currency.types";
 
 export default function Painel() {
   const {
@@ -75,10 +78,10 @@ export default function Painel() {
       </div>
       {currencyRate.bid ? (
         <div className={styles.info_container}>
-          <p className="has-text-weight-bold is-size-6">
+          <p className="has-text-weight-bold is-size-5">
             Cotação atual do Dólar Comercial:
           </p>
-          <p className="has-text-weight-bold is-size-5">
+          <p className="has-text-weight-bold is-size-4">
             R${" "}
             {formatPrice(
               Number(currencyRate.bid.replace(",", "."))
