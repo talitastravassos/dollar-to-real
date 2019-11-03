@@ -2,6 +2,10 @@ import React from "react";
 import styles from "./styles.module.scss";
 import { formatPrice } from "../../../../utils/masks";
 import { CurrencyContext } from "../../../../context/CurrencyContext";
+import Icon from "../../../../components/Icon";
+import BrazilFlag from "../../../../assets/brazil.svg";
+import USAFlag from "../../../../assets/united-states.svg";
+
 
 // Home component that will display the data processing results
 export default function ProcessedResult() {
@@ -25,6 +29,7 @@ export default function ProcessedResult() {
       <span className="tag is-info is-light is-medium">Pagamento: {(paymentMode === 'cash') ? 'Dinheiro' : 'Cartão de Crédito'}</span>
       <div className={styles.info_container}>
         <div className={styles.info_column}>
+          <Icon image={BrazilFlag}/>
           <h3 className="is-size-5">Valor Total (com IOF):</h3>
           <p className="is-size-4 has-text-weight-bold">
             R${" "}
@@ -43,6 +48,7 @@ export default function ProcessedResult() {
           </p>
         </div>
         <div>
+          <Icon image={USAFlag}/>
           <h3 className="is-size-5">Valor (com a taxa do estado):</h3>
           <p className="is-size-4 has-text-weight-bold">
             USD{" "}
