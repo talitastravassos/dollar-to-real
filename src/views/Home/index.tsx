@@ -35,7 +35,7 @@ export default function Home() {
             cobrança de impostos sobre transações bancarias.
           </li>
         </ul>
-        <div style={{ marginTop: 30 }}>
+        <div className={styles.painel_container}>
           <Painel />
           <ProcessedResult />
         </div>
