@@ -9,15 +9,17 @@ import {
   DataToProcess
 } from "../../../../context/currency.types";
 
+// Home component with the inputs used in the application
 export default function Painel() {
   const {
     action: { paymentInCash, paymentInCredit, setDataToConvert },
     state: { currencyRate, paymentMode }
-  } = React.useContext(CurrencyContext);
+  } = React.useContext(CurrencyContext); // context api
 
-  const [data, setData] = React.useState<DataToProcess>(initialValues);
+  const [data, setData] = React.useState<DataToProcess>(initialValues); // component state
 
   const onChange = (name: string, value: string) => {
+    // get input data and set into component state
     if (name === "value") {
       setData(prevState => ({
         ...prevState,
@@ -32,6 +34,7 @@ export default function Painel() {
   };
 
   const paymentSelected = (mode: string) => {
+    // change payment mode in context api
     if (mode === "credit") {
       paymentInCredit();
     } else if (mode === "cash") {
@@ -40,6 +43,7 @@ export default function Painel() {
   };
 
   React.useEffect(() => {
+    // send data to be converted to context api
     if (data.stateTax !== 0 && data.valueToConvert) {
       setDataToConvert(data);
     }
@@ -75,6 +79,7 @@ export default function Painel() {
           ]}
           selectedOption={paymentSelected}
         />
+        {/* display message about IOF */}
         {paymentMode !== "" ? (
           <article className="message is-info">
             <div className="message-header">
@@ -89,6 +94,7 @@ export default function Painel() {
           ""
         )}
       </div>
+      {/* display currency rate */}
       {currencyRate.bid ? (
         <div className={styles.info_container}>
           <p className="has-text-weight-bold is-size-5">

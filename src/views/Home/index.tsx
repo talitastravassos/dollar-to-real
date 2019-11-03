@@ -4,6 +4,7 @@ import Painel from "./components/Painel";
 import styles from "./styles.module.scss";
 import Footer from "../../components/Footer";
 
+// Home view: view responsible for the application homepage
 export default function Home() {
   return (
     <>
@@ -16,7 +17,7 @@ export default function Home() {
           do IOF e a taxa do estado americano. Para realizar uma simulação basta
           digitar no campo indicado o valor que deseja converter, a taxa do
           estado americano e selecionar o modo de pagamento (dinheiro ou cartão
-          de crédito), logo abaixo irá aparecer o resultado do cálculo.
+          de crédito), logo em seguida irá aparecer o resultado do cálculo.
         </p>
         <h3
           className="is-size-4 is-size-5-mobile has-text-weight-bold"

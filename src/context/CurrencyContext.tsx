@@ -10,6 +10,7 @@ import {
 } from "./currency.types";
 import { numberMask } from "../utils/masks";
 
+// global application state definition
 interface State {
   currencyRate: CurrencyRate; // cotação atual
   IOFBRL: number;
@@ -19,6 +20,7 @@ interface State {
   isProcessed: boolean;
 }
 
+// definition of type IContext used by context api
 interface IContext {
   state: State;
   action: {
@@ -30,10 +32,11 @@ interface IContext {
   };
 }
 
-const base_url = "https://economia.awesomeapi.com.br/USD-BRL/";
+const base_url = "https://economia.awesomeapi.com.br/USD-BRL/"; //rest api url
 
-export const CurrencyContext = React.createContext({} as IContext);
+export const CurrencyContext = React.createContext({} as IContext); // create context
 
+// class with the data and operations stored in context api that the application will consume
 export default class CurrencyProvider extends React.Component<{}, State> {
   constructor(props: any) {
     super(props);
@@ -48,10 +51,12 @@ export default class CurrencyProvider extends React.Component<{}, State> {
     };
   }
 
+  // set data to convert in global state
   setDataToConvert = (dataToConvert: DataToProcess) => {
     this.setState({ dataToConvert });
   };
 
+  //rest api request for currency rate
   getCurrencyRate = () => {
     axios.get(base_url).then(res => {
       // console.log(res.data[0])
@@ -61,6 +66,7 @@ export default class CurrencyProvider extends React.Component<{}, State> {
     });
   };
 
+  //change payment mode to 'cash' and set IOF for 1.1% (cash)
   paymentInCash = () => {
     this.setState({
       IOFBRL: 1.1,
@@ -68,6 +74,7 @@ export default class CurrencyProvider extends React.Component<{}, State> {
     });
   };
 
+  //change payment mode to 'credit' and set IOF for 6.4% (credit)
   paymentInCredit = () => {
     this.setState({
       IOFBRL: 6.4,
@@ -75,11 +82,13 @@ export default class CurrencyProvider extends React.Component<{}, State> {
     });
   };
 
+  //percentage calculation
   calcPercentage = (percentage: number, value: number): number => {
     let calc = value * (percentage / 100);
     return Number(calc.toFixed(2));
   };
 
+  // calculation of payment processing using data currently in the global state
   paymentProcessing = () => {
     const { IOFBRL, currencyRate } = this.state;
     const { stateTax, valueToConvert } = this.state.dataToConvert;
@@ -103,6 +112,7 @@ export default class CurrencyProvider extends React.Component<{}, State> {
 
     // console.log(payment);
 
+    // set to global state the results
     this.setState({
       processedData: payment,
       isProcessed: true
@@ -110,15 +120,12 @@ export default class CurrencyProvider extends React.Component<{}, State> {
   };
 
   componentDidMount() {
+    // get the currency rate every time the application starts
     this.getCurrencyRate();
   }
 
-  componentDidUpdate() {
-    // this.paymentProcessing();
-    // console.log(this.state);
-  }
-
   render() {
+    // definition of the data and operations that the entire application will have access
     const value = {
       state: { ...this.state },
       action: {

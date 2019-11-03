@@ -5,10 +5,12 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import styles from './styles.module.scss'
 
+// Input reusable component
 interface State {
     value: any;
 }
 
+// Props used by component 
 interface Props {
     label: string;
     withPrefix: boolean;
@@ -24,11 +26,13 @@ export default function InputValue({ label, withPrefix, prefix, onChange, mask, 
     });
 
     React.useEffect(() => {
+        // on change state
         onChange(name, state.value)
         // eslint-disable-next-line
     }, [state])
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        // on change setState
         setState({ ...state, [prop]: mask(event.target.value) });
     };
 

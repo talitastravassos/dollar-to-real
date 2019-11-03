@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import { formatPrice } from "../../../../utils/masks";
 import { CurrencyContext } from "../../../../context/CurrencyContext";
 
+// Home component that will display the data processing results
 export default function ProcessedResult() {
   const {
     action: { paymentProcessing },
@@ -10,6 +11,7 @@ export default function ProcessedResult() {
   } = React.useContext(CurrencyContext);
 
   React.useEffect(() => {
+    // When the payment mode changes, the function paymentProcessing will be executed to display the new results.
     paymentProcessing();
     console.log(processedData);
     // eslint-disable-next-line

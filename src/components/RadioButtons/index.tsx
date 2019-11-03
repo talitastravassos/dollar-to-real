@@ -7,6 +7,8 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 // import styles from "./styles.module.scss";
 
+// Radio buttons reusable component
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     formControl: {
@@ -15,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+// Props used by component 
 interface Props {
   fields: any[];
   legend: string;
@@ -26,11 +29,12 @@ export default function RadioButtons({ fields, legend, selectedOption }: Props) 
   const [value, setValue] = React.useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // on change setState
     setValue((event.target as HTMLInputElement).value);
   };
 
   React.useEffect(() => {
-    // console.log(value);
+    // on change state
     selectedOption(value)
     // eslint-disable-next-line
   }, [value]);

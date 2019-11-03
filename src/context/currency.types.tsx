@@ -1,3 +1,4 @@
+// types used by context and the whole application
 export interface CurrencyRate {
   code: string;
   codein: string;
