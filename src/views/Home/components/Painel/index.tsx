@@ -52,9 +52,12 @@ export default function Painel() {
 
   return (
     <div className={styles.container}>
+      <h1 className="is-size-2 is-size-4-mobile has-text-weight-bold">
+        Quanto deseja converter?
+      </h1>
       <div className={styles.input_container}>
         <InputValue
-          label={"Valor Solicitado"}
+          label={"Valor em Dólares"}
           withPrefix
           prefix={"$"}
           mask={formatPrice}

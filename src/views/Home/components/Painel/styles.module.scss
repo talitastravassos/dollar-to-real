@@ -16,8 +16,12 @@
 .input_container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
+
+  @media only screen and (max-width: 800px) {
+    justify-content: center;
+  }
 }
 
 .info_container {
