@@ -6,8 +6,21 @@
   margin-top: 30px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 
   @media only screen and (max-width: 1000px) {
     flex-direction: column;
   }
 }
+
+.title{
+  font-family: 'Pacifico', cursive;
+  font-size: 5rem;
+  text-align: center;
+
+  @media only screen and (max-width: 800px) {
+    font-size: 3rem;
+  }
+}
+
+

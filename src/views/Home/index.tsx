@@ -9,8 +9,8 @@ export default function Home() {
   return (
     <>
       <div className={styles.container}>
-        <h1 className="is-size-1 is-size-2-mobile has-text-weight-bold">
-          USD 2 Real
+        <h1 className={styles.title}>
+          USD 2 Real!
         </h1>
         <p className="is-size-5">
           Simule a compra de dólares americanos, levando em consideração o valor
@@ -27,11 +27,11 @@ export default function Home() {
           Informações importantes:{" "}
         </h3>
         <ul>
-          <li>
+          <li className="is-size-5">
             - Sobre o IOF: é um imposto federal sobre operações de crédito,
             câmbio e seguros.
           </li>
-          <li>
+          <li className="is-size-5">
             - Sobre a taxa do estado: nos EUA cada estado tem sua politica de
             cobrança de impostos sobre transações bancarias.
           </li>
