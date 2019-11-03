@@ -68,7 +68,7 @@ export default function Painel() {
       </div>
       <div>
         <RadioButtons
-          legend={"Modo de Pagamento"}
+          legend={"Selecione o modo de pagamento"}
           fields={[
             { value: "credit", label: "Cartão de Crédito" },
             { value: "cash", label: "Em Dinheiro" }
