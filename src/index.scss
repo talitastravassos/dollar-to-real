@@ -1,15 +1,28 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+// fonts
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Pacifico&display=swap");
 
 body {
   margin: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
+// mixins used in the project
+@mixin shadow {
+  box-shadow: 0px 1px 4px -1px rgba(42, 42, 42, 0.65);
+}
+
+@mixin radius {
+  border-radius: 5px;
+}
+
+@mixin container-padding {
+  padding: 3% 5% 3% 5%;
+}
